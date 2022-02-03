@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { answer } from './helpers/gameLogic';
 
 type Input = {
 	attempt: string;
@@ -17,6 +18,8 @@ function App() {
 		setSolutionAttempts([...solutionAttempts, attempt]);
 		console.log(attempt);
 	};
+
+	console.log(answer());
 
 	return (
 		<div>
