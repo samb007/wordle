@@ -1,21 +1,26 @@
 import './App.css';
 
+import {
+    LetterClue,
+    getSolution,
+    isWordAllowed,
+    letterClueHandler,
+} from './helpers/gameLogic';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import React from 'react';
-import { getInitialSolution, isWordAllowed } from './helpers/gameLogic';
+import classnames from 'classnames';
 
 type Input = {
     attempt: string;
 };
 
 function App() {
-    const { register, handleSubmit } = useForm<Input>();
-    const [solution, setSolution] = React.useState(getInitialSolution());
-    const [solutionAttempts, setSolutionAttempts] = React.useState<string[]>([
-        'raise',
-        'waste',
-    ]);
+    const { register, handleSubmit, reset } = useForm<Input>();
+    const [solution, setSolution] = React.useState(getSolution());
+    const [solutionAttempts, setSolutionAttempts] = React.useState<string[]>(
+        []
+    );
     const [errorState, setErrorState] = React.useState(false);
 
     const onSubmit: SubmitHandler<Input> = ({ attempt }) => {
@@ -28,18 +33,53 @@ function App() {
         }
     };
 
-    console.log(getInitialSolution());
+    React.useEffect(() => {
+        reset();
+        if (solutionAttempts[solutionAttempts.length - 1] === solution) {
+            window.alert(
+                `Aren't you clever! You got it in ${solutionAttempts.length} goes!`
+            );
+            setSolution(getSolution());
+            setSolutionAttempts([]);
+        }
+    }, [reset, solution, solutionAttempts]);
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <h1 className="font-black">Solution: {solution}</h1>
+            <h1 className="text-4xl">BURKLE</h1>
+            <h2 className="font-black">Solution: {solution}</h2>
             <div className="flex flex-col items-center justify-center">
                 {solutionAttempts.map((solutionAttempt) => {
                     return (
                         <div className="flex flex-row m-4">
-                            {solutionAttempt.split('').map((letter) => {
+                            {solutionAttempt.split('').map((letter, i) => {
                                 return (
-                                    <div className="p-4 m-1 border">
+                                    <div
+                                        className={classnames(
+                                            'p-4 m-1 border',
+                                            {
+                                                'bg-gray-500 text-white':
+                                                    letterClueHandler({
+                                                        letter,
+                                                        letterPosition: i,
+                                                        solution,
+                                                    }) === LetterClue.NotInWord,
+                                                'bg-amber-400 text-white':
+                                                    letterClueHandler({
+                                                        letter,
+                                                        letterPosition: i,
+                                                        solution,
+                                                    }) === LetterClue.InWord,
+                                                'bg-lime-600 text-white':
+                                                    letterClueHandler({
+                                                        letter,
+                                                        letterPosition: i,
+                                                        solution,
+                                                    }) ===
+                                                    LetterClue.InWordAndCorrectPlace,
+                                            }
+                                        )}
+                                    >
                                         {letter.toUpperCase()}
                                     </div>
                                 );
@@ -59,7 +99,7 @@ function App() {
                     pattern="[A-Za-z]{5}"
                 />
                 {errorState && (
-                    <p data-testid="error" className="text-red-600">
+                    <p data-testid="error" className="mb-2 text-red-600">
                         Word is not in the list
                     </p>
                 )}
