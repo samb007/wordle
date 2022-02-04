@@ -47,33 +47,34 @@ function App() {
     return (
         <div className="flex flex-col items-center justify-center">
             <h1 className="text-4xl">BURKLE</h1>
-            <h2 className="font-black">Solution: {solution}</h2>
+            {/* <h2 className="font-black">Solution: {solution}</h2> */}
             <div className="flex flex-col items-center justify-center">
-                {solutionAttempts.map((solutionAttempt) => {
+                {solutionAttempts.map((solutionAttempt, i) => {
                     return (
-                        <div className="flex flex-row m-4">
-                            {solutionAttempt.split('').map((letter, i) => {
+                        <div className="flex flex-row m-2">
+                            {solutionAttempt.split('').map((letter, j) => {
                                 return (
                                     <div
+                                        data-testid={`${solutionAttempt}-${i}-${letter}-${j}`}
                                         className={classnames(
-                                            'p-4 m-1 border',
+                                            'w-10 h-10 p-4 m-1 border flex justify-center items-center',
                                             {
                                                 'bg-gray-500 text-white':
                                                     letterClueHandler({
                                                         letter,
-                                                        letterPosition: i,
+                                                        letterPosition: j,
                                                         solution,
                                                     }) === LetterClue.NotInWord,
                                                 'bg-amber-400 text-white':
                                                     letterClueHandler({
                                                         letter,
-                                                        letterPosition: i,
+                                                        letterPosition: j,
                                                         solution,
                                                     }) === LetterClue.InWord,
                                                 'bg-lime-600 text-white':
                                                     letterClueHandler({
                                                         letter,
-                                                        letterPosition: i,
+                                                        letterPosition: j,
                                                         solution,
                                                     }) ===
                                                     LetterClue.InWordAndCorrectPlace,
@@ -87,10 +88,32 @@ function App() {
                         </div>
                     );
                 })}
+                {6 - solutionAttempts.length > -1 ? (
+                    Array(6 - solutionAttempts.length)
+                        .fill(' ')
+                        .map(() => {
+                            return (
+                                <div className="flex flex-row m-2">
+                                    <div className="w-10 h-10 p-4 m-1 border"></div>
+                                    <div className="w-10 h-10 p-4 m-1 border"></div>
+                                    <div className="w-10 h-10 p-4 m-1 border"></div>
+                                    <div className="w-10 h-10 p-4 m-1 border"></div>
+                                    <div className="w-10 h-10 p-4 m-1 border"></div>
+                                </div>
+                            );
+                        })
+                ) : (
+                    <div>
+                        <p className="mb-2">
+                            You are human garbage. The solution is:{' '}
+                            {solution.toUpperCase()}
+                        </p>
+                    </div>
+                )}
             </div>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col items-center justify-center max-w-sm"
+                className="flex flex-col items-center justify-center max-w-sm m-2"
             >
                 <input
                     className="focus:shadow-outline w-full px-3 py-2 mb-4 leading-tight text-gray-700 border rounded shadow appearance-none"

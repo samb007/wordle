@@ -44,4 +44,6 @@ describe('App', () => {
             screen.queryByText('Word is not in the list')
         ).not.toBeInTheDocument();
     });
+
+    // TODO: Write test around the background colours of the solution attempt letters
 });
