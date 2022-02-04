@@ -26,11 +26,15 @@ export function letterClueHandler({
     letterPosition: number;
     solution: string;
 }): LetterClue {
-    if (letter === solution[letterPosition]) {
+    const lowerCaseLetter = letter.toLowerCase();
+
+    if (lowerCaseLetter === solution[letterPosition]) {
         return LetterClue.InWordAndCorrectPlace;
     }
-    if (solution.indexOf(letter) > -1) {
+
+    if (solution.indexOf(lowerCaseLetter) > -1) {
         return LetterClue.InWord;
     }
+
     return LetterClue.NotInWord;
 }

@@ -24,12 +24,13 @@ function App() {
     const [errorState, setErrorState] = React.useState(false);
 
     const onSubmit: SubmitHandler<Input> = ({ attempt }) => {
-        if (isWordAllowed(attempt)) {
+        const lowerCaseAttempt = attempt.toLowerCase();
+        if (isWordAllowed(lowerCaseAttempt)) {
             setErrorState(false);
-            setSolutionAttempts([...solutionAttempts, attempt]);
+            setSolutionAttempts([...solutionAttempts, lowerCaseAttempt]);
         } else {
             setErrorState(true);
-            console.log(attempt);
+            console.log(lowerCaseAttempt);
         }
     };
 
@@ -37,7 +38,9 @@ function App() {
         reset();
         if (solutionAttempts[solutionAttempts.length - 1] === solution) {
             window.alert(
-                `Aren't you clever! You got it in ${solutionAttempts.length} goes!`
+                `Aren't you clever?! You got it in ${
+                    solutionAttempts.length
+                } go${solutionAttempts.length > 1 ? 'es' : ''}!`
             );
             setSolution(getSolution());
             setSolutionAttempts([]);
