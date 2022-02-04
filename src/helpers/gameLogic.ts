@@ -1,5 +1,12 @@
-import { answerWords } from "../words"
+import { allWords, answerWords } from '../words';
 
-export function answer(){
-    return answerWords[Math.floor(Math.random()*answerWords.length)]
+export function getInitialSolution() {
+    return answerWords[Math.floor(Math.random() * answerWords.length)];
+}
+
+export function isWordAllowed(word: string): boolean {
+    if (allWords.includes(word.toLowerCase())) {
+        return true;
+    }
+    return false;
 }
