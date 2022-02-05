@@ -17,24 +17,41 @@ export enum LetterClue {
     InWordAndCorrectPlace,
 }
 
-export function letterClueHandler({
-    letter,
-    letterPosition,
-    solution,
-}: {
-    letter: string;
-    letterPosition: number;
-    solution: string;
-}): LetterClue {
-    const lowerCaseLetter = letter.toLowerCase();
+export function letterClueHandler(
+    attempt: string,
+    solution: string
+): (LetterClue | undefined)[] {
+    const lowerCaseAttempt = attempt.toLowerCase();
+    let letterClue: (LetterClue | undefined)[] = [
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+    ];
+    const attemptLetters = lowerCaseAttempt.split('');
+    let solutionLetters = solution.split('');
 
-    if (lowerCaseLetter === solution[letterPosition]) {
-        return LetterClue.InWordAndCorrectPlace;
-    }
+    // replace InWordAndCorrectPlace letters from both arrays with 'qx' to retain the leftover letter's possitions
+    // then search for InWord and do the same the letters left in attempt array. the remaining letters are NotInWord
+    attemptLetters.forEach((letter, i) => {
+        if (letter === solution[i]) {
+            attemptLetters.splice(i, 1, 'qx');
+            solutionLetters.splice(i, 1, 'qx');
+            letterClue[i] = LetterClue.InWordAndCorrectPlace;
 
-    if (solution.indexOf(lowerCaseLetter) > -1) {
-        return LetterClue.InWord;
-    }
+            return;
+        }
 
-    return LetterClue.NotInWord;
+        if (solutionLetters.indexOf(letter) > -1) {
+            letterClue[i] = LetterClue.InWord;
+            attemptLetters.splice(i, 1, 'qx');
+            solutionLetters.splice(i, 1, 'qx');
+            return;
+        }
+
+        letterClue[i] = LetterClue.NotInWord;
+    });
+
+    return letterClue;
 }

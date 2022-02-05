@@ -63,23 +63,21 @@ function App() {
                                             'w-10 h-10 p-4 m-1 border flex justify-center items-center',
                                             {
                                                 'bg-gray-500 text-white':
-                                                    letterClueHandler({
-                                                        letter,
-                                                        letterPosition: j,
-                                                        solution,
-                                                    }) === LetterClue.NotInWord,
+                                                    letterClueHandler(
+                                                        solutionAttempt,
+                                                        solution
+                                                    )[j] ===
+                                                    LetterClue.NotInWord,
                                                 'bg-amber-400 text-white':
-                                                    letterClueHandler({
-                                                        letter,
-                                                        letterPosition: j,
-                                                        solution,
-                                                    }) === LetterClue.InWord,
+                                                    letterClueHandler(
+                                                        solutionAttempt,
+                                                        solution
+                                                    )[j] === LetterClue.InWord,
                                                 'bg-lime-600 text-white':
-                                                    letterClueHandler({
-                                                        letter,
-                                                        letterPosition: j,
-                                                        solution,
-                                                    }) ===
+                                                    letterClueHandler(
+                                                        solutionAttempt,
+                                                        solution
+                                                    )[j] ===
                                                     LetterClue.InWordAndCorrectPlace,
                                             }
                                         )}
@@ -91,7 +89,7 @@ function App() {
                         </div>
                     );
                 })}
-                {6 - solutionAttempts.length > -1 ? (
+                {6 - solutionAttempts.length > 0 ? (
                     Array(6 - solutionAttempts.length)
                         .fill(' ')
                         .map(() => {

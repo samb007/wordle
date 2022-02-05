@@ -2,28 +2,30 @@ import { LetterClue, letterClueHandler } from '../gameLogic';
 
 describe('letterClueHandler', () => {
     it.each`
-        letter | letterPosition | solution   | expectedClue
-        ${'a'} | ${0}           | ${'apple'} | ${LetterClue.InWordAndCorrectPlace}
-        ${'A'} | ${0}           | ${'apple'} | ${LetterClue.InWordAndCorrectPlace}
-        ${'b'} | ${0}           | ${'apple'} | ${LetterClue.NotInWord}
-        ${'p'} | ${0}           | ${'apple'} | ${LetterClue.InWord}
-        ${'p'} | ${0}           | ${'apple'} | ${LetterClue.InWord}
+        attempt    | solution   | expectedClue
+        ${'awake'} | ${'apple'} | ${[LetterClue.InWordAndCorrectPlace, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.InWordAndCorrectPlace]}
+        ${'Awake'} | ${'apple'} | ${[LetterClue.InWordAndCorrectPlace, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.InWordAndCorrectPlace]}
+        ${'daddy'} | ${'death'} | ${[LetterClue.InWordAndCorrectPlace, LetterClue.InWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord]}
+        ${'booby'} | ${'apple'} | ${[LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord]}
+        ${'pound'} | ${'apple'} | ${[LetterClue.InWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord]}
+        ${'booby'} | ${'spoon'} | ${[LetterClue.NotInWord, LetterClue.InWord, LetterClue.InWordAndCorrectPlace, LetterClue.NotInWord, LetterClue.NotInWord]}
+        ${'booby'} | ${'robot'} | ${[LetterClue.InWord, LetterClue.InWordAndCorrectPlace, LetterClue.InWord, LetterClue.NotInWord, LetterClue.NotInWord]}
     `(
-        'should return the correct clue',
+        'should return the correct clue given the attempt: $attempt and the solution: $solution',
         ({
-            letter,
-            letterPosition,
+            attempt,
             solution,
             expectedClue,
         }: {
-            letter: string;
-            letterPosition: number;
+            attempt: string;
             solution: string;
-            expectedClue: LetterClue;
+            expectedClue: LetterClue[];
         }) => {
-            expect(
-                letterClueHandler({ letter, letterPosition, solution })
-            ).toEqual(expectedClue);
+            console.log({
+                actual: letterClueHandler(attempt, solution),
+                expectedClue,
+            });
+            expect(letterClueHandler(attempt, solution)).toEqual(expectedClue);
         }
     );
 });
