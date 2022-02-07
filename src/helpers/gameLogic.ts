@@ -20,37 +20,37 @@ export enum LetterClue {
 export function letterClueHandler(
     attempt: string,
     solution: string
-): (LetterClue | undefined)[] {
+): LetterClue[] {
     const lowerCaseAttempt = attempt.toLowerCase();
-    let letterClue: (LetterClue | undefined)[] = [
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-    ];
-    const attemptLetters = lowerCaseAttempt.split('');
+    let letterClue: LetterClue[] = [];
+    let attemptLetters = lowerCaseAttempt.split('');
     let solutionLetters = solution.split('');
 
-    // replace InWordAndCorrectPlace letters from both arrays with 'qx' to retain the leftover letter's possitions
+    // replace InWordAndCorrectPlace letters from both arrays with 'placeholder' to retain the leftover letter's possitions
     // then search for InWord and do the same the letters left in attempt array. the remaining letters are NotInWord
     attemptLetters.forEach((letter, i) => {
         if (letter === solution[i]) {
-            attemptLetters.splice(i, 1, 'qx');
-            solutionLetters.splice(i, 1, 'qx');
             letterClue[i] = LetterClue.InWordAndCorrectPlace;
-
-            return;
+            attemptLetters.splice(i, 1, 'placeholder');
+            solutionLetters.splice(i, 1, 'placeholder');
         }
+    });
 
-        if (solutionLetters.indexOf(letter) > -1) {
-            letterClue[i] = LetterClue.InWord;
-            attemptLetters.splice(i, 1, 'qx');
-            solutionLetters.splice(i, 1, 'qx');
-            return;
+    attemptLetters.forEach((letter, i) => {
+        if (letterClue[i] !== LetterClue.InWordAndCorrectPlace) {
+            if (solutionLetters.indexOf(letter) > -1) {
+                letterClue[i] = LetterClue.InWord;
+                attemptLetters.splice(i, 1, 'placeholder');
+                solutionLetters.splice(
+                    solutionLetters.indexOf(letter),
+                    1,
+                    'placeholder'
+                );
+                return;
+            }
+
+            letterClue[i] = LetterClue.NotInWord;
         }
-
-        letterClue[i] = LetterClue.NotInWord;
     });
 
     return letterClue;

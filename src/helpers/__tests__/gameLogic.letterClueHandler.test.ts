@@ -10,6 +10,8 @@ describe('letterClueHandler', () => {
         ${'pound'} | ${'apple'} | ${[LetterClue.InWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord, LetterClue.NotInWord]}
         ${'booby'} | ${'spoon'} | ${[LetterClue.NotInWord, LetterClue.InWord, LetterClue.InWordAndCorrectPlace, LetterClue.NotInWord, LetterClue.NotInWord]}
         ${'booby'} | ${'robot'} | ${[LetterClue.InWord, LetterClue.InWordAndCorrectPlace, LetterClue.InWord, LetterClue.NotInWord, LetterClue.NotInWord]}
+        ${'taken'} | ${'acute'} | ${[LetterClue.InWord, LetterClue.InWord, LetterClue.NotInWord, LetterClue.InWord, LetterClue.NotInWord]}
+        ${'hutch'} | ${'dutch'} | ${[LetterClue.NotInWord, LetterClue.InWordAndCorrectPlace, LetterClue.InWordAndCorrectPlace, LetterClue.InWordAndCorrectPlace, LetterClue.InWordAndCorrectPlace]}
     `(
         'should return the correct clue given the attempt: $attempt and the solution: $solution',
         ({
