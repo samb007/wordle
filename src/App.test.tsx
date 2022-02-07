@@ -43,7 +43,6 @@ describe('App', () => {
         expect(
             screen.queryByText('Word is not in the list')
         ).not.toBeInTheDocument();
+        expect(screen.getByTestId('penis-0')).toBeInTheDocument();
     });
-
-    // TODO: Write test around the background colours of the solution attempt letters
 });
