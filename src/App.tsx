@@ -115,6 +115,7 @@ function App() {
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col items-center justify-center max-w-sm m-2"
+                autoComplete="off"
             >
                 <input
                     className="focus:shadow-outline w-full px-3 py-2 mb-4 leading-tight text-gray-700 border rounded shadow appearance-none"

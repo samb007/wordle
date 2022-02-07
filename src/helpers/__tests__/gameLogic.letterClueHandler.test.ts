@@ -23,10 +23,6 @@ describe('letterClueHandler', () => {
             solution: string;
             expectedClue: LetterClue[];
         }) => {
-            console.log({
-                actual: letterClueHandler(attempt, solution),
-                expectedClue,
-            });
             expect(letterClueHandler(attempt, solution)).toEqual(expectedClue);
         }
     );
