@@ -2,13 +2,17 @@ import './App.css';
 
 import {
     LetterClue,
+    SolutionAttemptsLetterClues,
     getSolution,
     isWordAllowed,
     letterClueHandler,
+    letterClueHandler2,
 } from './helpers/gameLogic';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import Alphabet from './components/Alphabet';
 import React from 'react';
+import { alphabetInitialState } from './helpers/alphabet';
 import classnames from 'classnames';
 
 type Input = {
@@ -23,6 +27,8 @@ function App() {
     const [solutionAttempts, setSolutionAttempts] = React.useState<string[]>(
         []
     );
+    const [solutionAttemptsLetterClues, setSolutionAttemptsLetterClues] =
+        React.useState<SolutionAttemptsLetterClues[]>([]);
     const [pageState, setPageState] = React.useState<PageState>('idle');
 
     const onSubmit: SubmitHandler<Input> = ({ attempt }) => {
@@ -32,7 +38,6 @@ function App() {
             setSolutionAttempts([...solutionAttempts, lowerCaseAttempt]);
         } else {
             setPageState('error');
-            console.log(lowerCaseAttempt);
         }
     };
 
@@ -52,6 +57,19 @@ function App() {
             setPageState('fail');
         }
     }, [reset, solution, solutionAttempts]);
+
+    React.useEffect(() => {
+        if (solutionAttempts.length > 0) {
+            setSolutionAttemptsLetterClues([
+                ...solutionAttemptsLetterClues,
+                letterClueHandler2(
+                    solutionAttempts[solutionAttempts.length - 1],
+                    solution
+                ),
+            ]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [solution, solutionAttempts]);
 
     return (
         <div className="flex flex-col items-center justify-center">
@@ -121,6 +139,12 @@ function App() {
                     className="flex flex-col items-center justify-center max-w-sm m-2"
                     autoComplete="off"
                 >
+                    <Alphabet
+                        onClick={() => {}}
+                        solutionAttemptsLetterClues={
+                            solutionAttemptsLetterClues
+                        }
+                    />
                     <input
                         className="focus:shadow-outline w-full px-3 py-2 mb-4 leading-tight text-gray-700 border rounded shadow appearance-none"
                         type="text"
