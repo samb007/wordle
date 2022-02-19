@@ -207,7 +207,7 @@ function App() {
                         </p>
                     )}
 
-                    <div>
+                    <div className="mt-2">
                         <input
                             data-testid="submit"
                             type="submit"

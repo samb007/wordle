@@ -8,6 +8,7 @@ export interface LetterProps {
     backgroundColour?: string;
 }
 
+// TODO: responsive letter sizes
 const Letter: React.FC<LetterProps & React.HTMLProps<HTMLButtonElement>> = ({
     letter,
     onClick,
@@ -16,7 +17,7 @@ const Letter: React.FC<LetterProps & React.HTMLProps<HTMLButtonElement>> = ({
     return (
         <button
             className={classnames(
-                'mx-1 my-2 py-3 border uppercase rounded w-1 px-3 flex justify-center sm:w-10',
+                'mx-1 my-2 py-3 border uppercase rounded w-7 px-2 flex justify-center sm:w-10',
                 backgroundColour
             )}
             onClick={(evt) => onClick(evt)}
