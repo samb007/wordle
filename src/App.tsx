@@ -62,6 +62,7 @@ function App() {
     const resetGame = () => {
         setSolution(getSolution());
         setSolutionAttempts([]);
+        setSolutionAttemptsLetterClues([]);
         setPageState('idle');
     };
 
@@ -192,7 +193,8 @@ function App() {
                         }
                     />
                     <input
-                        className="focus:shadow-outline w-full px-3 py-2 mb-4 leading-tight text-gray-700 border rounded shadow appearance-none"
+                        className="hidden"
+                        aria-hidden="true"
                         type="text"
                         {...register('attempt', { required: true })}
                         pattern="[A-Za-z]{5}"
