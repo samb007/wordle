@@ -145,13 +145,13 @@ function App() {
                                 );
                             })
                     ) : (
-                        <div className="flex flex-row m-2">
+                        <React.Fragment>
                             <div className="w-10 h-10 p-4 m-1 border"></div>
                             <div className="w-10 h-10 p-4 m-1 border"></div>
                             <div className="w-10 h-10 p-4 m-1 border"></div>
                             <div className="w-10 h-10 p-4 m-1 border"></div>
                             <div className="w-10 h-10 p-4 m-1 border"></div>
-                        </div>
+                        </React.Fragment>
                     )}
                     {watch('attempt') &&
                         Array(5 - watch('attempt').length)
