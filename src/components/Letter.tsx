@@ -3,9 +3,9 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 export interface LetterProps {
-    letter: string;
-    onClick: () => void;
-    backgroundColour: string;
+    letter?: string;
+    onClick: (evt: React.MouseEvent<HTMLButtonElement>) => void;
+    backgroundColour?: string;
 }
 
 const Letter: React.FC<LetterProps & React.HTMLProps<HTMLButtonElement>> = ({
@@ -15,8 +15,11 @@ const Letter: React.FC<LetterProps & React.HTMLProps<HTMLButtonElement>> = ({
 }) => {
     return (
         <button
-            className={classnames('m-1 p-1', backgroundColour)}
-            onClick={onClick}
+            className={classnames(
+                'mx-1 my-2 py-3 border uppercase rounded w-1 px-3 flex justify-center sm:w-10',
+                backgroundColour
+            )}
+            onClick={(evt) => onClick(evt)}
         >
             {letter}
         </button>
